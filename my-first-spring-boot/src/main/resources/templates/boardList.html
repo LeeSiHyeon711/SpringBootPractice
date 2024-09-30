@@ -1,0 +1,32 @@
+<!--http://localhost:8080/board-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 실습</title>
+    <style>a{text-decoration: none}</style>
+</head>
+<body>
+<h2>게시판 개인실습 : 목록보기</h2>
+<h3>게시물 제목을 클릭하면 게시물 상세보기로 이동합니다</h3>
+<form method="get">
+    <table border="1" width="90%">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성일</th>
+        </tr>
+        <tr th:each="boardEntities :  ${boardEntities}">
+            <td th:text="${boardEntity.id}"></td>
+            <td th:text="${boardEntity.title}"></td>
+            <td th:text="${boardEntity.author}"></td>
+            <td th:text="${#dates.format(boardEntity.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${boardEntity.views}"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
