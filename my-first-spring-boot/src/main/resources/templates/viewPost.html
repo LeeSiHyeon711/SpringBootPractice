@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글보기</title>
+</head>
+<body>
+<h2>게시판 개인실습 : 게시글 상세보기</h2>
+<h3>목록보기 버튼을 누르면 리스트 페이지로 이동합니다</h3>
+<form method="get">
+<table border="1" width="80%">
+  <colgroup>
+    <col width="15%"/><col width="35%"/>
+    <col width="15%"/><col width="*"/>
+  </colgroup>
+  <tr>
+    <th>번호</th><td th:text="${boardEntity.id}"></td>
+  </tr>
+  <tr>
+    <th>제목</th><td th:text="${boardEntity.title}"></td>
+  </tr>
+  <tr>
+    <th>내용</th><td th:text="${boardEntity.content}"></td>
+  </tr>
+  <tr>
+    <th>작성자</th><td th:text="${boardEntity.author}"></td>
+  </tr>
+  <tr>
+    <th>조회수</th><td th:text="${boardEntity.views}"></td>
+  </tr>
+  <tr>
+    <th>작성일</th><td th:text="${#temporals.format(boardEntity.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+  </tr>
+  <tr>
+    <td>
+      <button type="button" onclick="location.href='/boardList'">목록보기</button>
+    </td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

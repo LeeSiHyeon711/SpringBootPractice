@@ -13,14 +13,14 @@ public class BoardEntity {
     private String title;
     private String author;
     private String content;
-    private LocalDateTime createdAt;
+    private LocalDateTime createDate;
     private int views;
 
     // 처음 저장될 때 현재 시간을 createdAt에 할당
     // 초 단위 값은 제거함
     @PrePersist
     protected void onCreate(){
-        this.createdAt = LocalDateTime.now().withSecond(0).withNano(0);
+        this.createDate = LocalDateTime.now().withSecond(0).withNano(0);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class BoardEntity {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", content='" + content + '\'' +
-                ", createdAt=" + createdAt +
+                ", createdAt=" + createDate +
                 ", views=" + views +
                 '}';
     }
@@ -67,12 +67,12 @@ public class BoardEntity {
         this.content = content;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreateDate(LocalDateTime createdAt) {
+        this.createDate = createdAt;
     }
 
     public int getViews() {

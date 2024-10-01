@@ -20,8 +20,8 @@ public class BoardController {
         model.addAttribute("boardEntities", boardEntities);
         return "boardList";
     }
-    @GetMapping("/board/{id}")
-    public String viewBoard(@PathVariable long id, Model model) {
+    @GetMapping("/viewPost/{id}")
+    public String viewPost(@PathVariable long id, Model model) {
         BoardEntity boardEntity = boardService.findBoardById(id);
         boardService.increaseViews(boardEntity);//조회수 증가
         model.addAttribute("boardEntity", boardEntity);
