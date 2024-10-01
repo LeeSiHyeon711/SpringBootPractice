@@ -33,8 +33,8 @@ public class BoardController {
         model.addAttribute("boardEntity", boardEntity);
         return "viewPost";
     }
-    @GetMapping("/addBoardForm")
     //게시글 작성 폼 보여주기 컨트롤러
+    @GetMapping("/addBoardForm")
     public String showAddBoardForm(Model model) {
         model.addAttribute("boardEntity", new BoardEntity());
         return "addBoardForm";
@@ -51,5 +51,23 @@ public class BoardController {
         boardService.increaseLikes(id);
         return "redirect:/boardList";
     }
-
+    //게시글 삭제 컨트롤러
+    @PostMapping("/deletePost")
+    public String deleteBoard(@RequestParam long id) {
+        boardService.deleteBoardById(id);
+        return "redirect:/boardList";
+    }
+    //게시글 수정 페이지로 이동(GET 요청)
+    @GetMapping("/editBoard/{id}")
+    public String showEditBoardForm(@PathVariable("id") long id, Model model) {
+        BoardEntity boardEntity = boardService.findBoardById(id);
+        model.addAttribute("boardEntity", boardEntity);
+        return "editBoardForm";
+    }
+    //게시글 수정하기 컨트롤러(POST 요청)
+    @PostMapping("/update/{id}")
+    public String updateBoard(@PathVariable("id") long id, @ModelAttribute("boardEntity") BoardEntity boardEntity) {
+        boardService.editBoard(id, boardEntity);
+        return "redirect:/boardList";
+    }
 }

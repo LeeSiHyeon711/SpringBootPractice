@@ -4,6 +4,7 @@ import com.example.my_first_spring_boot.entity.BoardEntity;
 import com.example.my_first_spring_boot.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -34,6 +35,22 @@ public class BoardService {
     public void increaseLikes(Long id) {
         BoardEntity boardEntity = boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid Board Id:"+id));
         boardEntity.setLikes(boardEntity.getLikes() + 1);
+        boardRepository.save(boardEntity);
+    }
+    //게시글 삭제 서비스
+    public void deleteBoardById(Long id) {
+        boardRepository.deleteById(id);
+    }
+    //게시글 ID로 게시글 가져오기
+    public BoardEntity getBoardById(Long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다"));
+    }
+    //게시글 수정
+    public void editBoard(Long id, BoardEntity editBoard) {
+        BoardEntity boardEntity = getBoardById(id);
+        boardEntity.setTitle(editBoard.getTitle());
+        boardEntity.setContent(editBoard.getContent());
         boardRepository.save(boardEntity);
     }
 }

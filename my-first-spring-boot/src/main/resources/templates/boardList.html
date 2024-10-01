@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/BoardStyle.css">
     <title>게시판 실습</title>
 </head>
 <body>
 <h2>게시판 개인실습 : 목록보기</h2>
 <form method="get">
-    <table border="1px" width="100%">
+    <table class="main-table">
         <tr>
             <th colspan="4">총 게시물 수</th>
             <th colspan="2" th:text="${totalCount}"></th>
@@ -32,8 +33,9 @@
             <td th:text="${boardEntity.likes}" style="text-align: center"></td>
         </tr>
     </table>
-    <br>
-    <button type="button" onclick="location.href='/addBoardForm'">글작성</button>
+    <div class="button-group">
+        <button type="button" onclick="location.href='/addBoardForm'">글작성</button>
+    </div>
 </form>
 </body>
 </html>
