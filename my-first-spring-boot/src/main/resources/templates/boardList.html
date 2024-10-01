@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <title>게시판 실습</title>
-    <style>a{text-decoration: none}</style>
 </head>
 <body>
 <h2>게시판 개인실습 : 목록보기</h2>
-<h3>게시물 제목을 클릭하면 게시물 상세보기로 이동합니다</h3>
 <form method="get">
-    <table border="1" width="90%">
+    <table border="1px" width="100%">
+        <tr>
+            <th colspan="4">총 게시물 수</th>
+            <th th:text="${totalCount}"></th>
+        </tr>
         <tr>
             <th width="10%">번호</th>
             <th width="*">제목</th>
-            <th width="15%">작성자</th>
+            <th width="20%">작성자</th>
             <th width="10%">조회수</th>
             <th width="25%">작성일</th>
         </tr>
         <tr th:each="boardEntity : ${boardEntities}">
-            <td th:text="${boardEntity.id}"></td>
+            <td th:text="${boardEntity.id}" style="text-align: center"></td>
             <td>
                 <a th:href="@{/viewPost/{id}(id=${boardEntity.id})}"
                    th:text="${boardEntity.title}"></a>
             </td>
-            <td th:text="${boardEntity.author}"></td>
-            <td th:text="${boardEntity.views}"></td>
-            <td th:text="${#temporals.format(boardEntity.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${boardEntity.author}" style="text-align: center"></td>
+            <td th:text="${boardEntity.views}" style="text-align: center"></td>
+            <td th:text="${#temporals.format(boardEntity.createDate, 'yyyy-MM-dd')}" style="text-align: center"></td>
         </tr>
     </table>
+    <button type="button" onclick="location.href='/addBoardForm'">글작성</button>
 </form>
 </body>
 </html>
