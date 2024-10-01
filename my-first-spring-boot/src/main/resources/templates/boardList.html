@@ -10,14 +10,15 @@
     <table border="1px" width="100%">
         <tr>
             <th colspan="4">총 게시물 수</th>
-            <th th:text="${totalCount}"></th>
+            <th colspan="2" th:text="${totalCount}"></th>
         </tr>
         <tr>
             <th width="10%">번호</th>
             <th width="*">제목</th>
             <th width="20%">작성자</th>
             <th width="10%">조회수</th>
-            <th width="25%">작성일</th>
+            <th width="20%">작성일</th>
+            <th width="10%">좋아요</th>
         </tr>
         <tr th:each="boardEntity : ${boardEntities}">
             <td th:text="${boardEntity.id}" style="text-align: center"></td>
@@ -28,8 +29,10 @@
             <td th:text="${boardEntity.author}" style="text-align: center"></td>
             <td th:text="${boardEntity.views}" style="text-align: center"></td>
             <td th:text="${#temporals.format(boardEntity.createDate, 'yyyy-MM-dd')}" style="text-align: center"></td>
+            <td th:text="${boardEntity.likes}" style="text-align: center"></td>
         </tr>
     </table>
+    <br>
     <button type="button" onclick="location.href='/addBoardForm'">글작성</button>
 </form>
 </body>

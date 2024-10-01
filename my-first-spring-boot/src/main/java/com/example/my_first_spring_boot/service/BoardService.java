@@ -30,4 +30,10 @@ public class BoardService {
     public void saveBoard(BoardEntity boardEntity) {
         boardRepository.save(boardEntity);
     }
+    //좋아요 버튼 서비스
+    public void increaseLikes(Long id) {
+        BoardEntity boardEntity = boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid Board Id:"+id));
+        boardEntity.setLikes(boardEntity.getLikes() + 1);
+        boardRepository.save(boardEntity);
+    }
 }

@@ -6,10 +6,7 @@ import com.example.my_first_spring_boot.entity.BoardEntity;
 import com.example.my_first_spring_boot.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,4 +45,11 @@ public class BoardController {
         boardService.saveBoard(boardEntity);
         return "redirect:/boardList";
     }
+    //좋아요 버튼 클릭 정보 보내기 컨트롤러
+    @PostMapping("/like")
+    public String likeBoard(@RequestParam long id) {
+        boardService.increaseLikes(id);
+        return "redirect:/boardList";
+    }
+
 }
