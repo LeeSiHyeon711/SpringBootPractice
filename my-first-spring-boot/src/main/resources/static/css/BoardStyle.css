@@ -1,26 +1,26 @@
 *{
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding: 5px;
     text-decoration: none;
-    background-color: #252525;
+    background-color: #22232c;
     color: white;
+    font-size: 18px;
 }
 .button-group {
     display: flex;
     justify-content: right;
-    gap: 5px;
 }
 button {
-    width: 80px;
-    margin-top: 10px;
+    width: 100px;
     margin-right: 10px;
+    margin-top: 10px;
     padding: 5px 10px;
     background-color: greenyellow;
     color: black;
     border: none;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 button:hover {
     color: white;
@@ -29,17 +29,28 @@ input, textarea {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    border: 2px solid greenyellow;
+    border-radius: 10px;
+    padding: 10px;
+    outline: none;
+}
+input:focus, textarea:focus {
+    border-color: white;
+    box-shadow: 0 0 5px rgba(30, 200, 0, 0.5);
 }
 td, th {
-    border: 1px solid greenyellow;
+    border: 2px solid greenyellow;
 }
 .sub-table {
     border-collapse: collapse;
-    border: 2px solid greenyellow;
+    border: none;
     width: 100%;
     height: 200px;
     background-color: #000000;
     margin: 20px auto;
+}
+.sub-table th {
+    width: 100px;
 }
 .main-table {
     border-collapse: collapse;
@@ -57,9 +68,8 @@ td, th {
 }
 .comment-table {
     border-collapse: collapse;
-    border: none;
+    border: 2px solid greenyellow;
     width: 100%;
-    margin : 20px 10px 20px 10px;
 }
 .comment-table th {
     border:none;
