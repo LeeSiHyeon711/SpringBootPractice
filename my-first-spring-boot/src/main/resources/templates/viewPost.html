@@ -47,5 +47,26 @@
     <button type="submit">삭제하기</button>
   </form>
 </div>
+<h3>댓글 목록</h3>
+<form action="/viewPost/" method="get">
+  <table class="comment-list-table">
+    <tr th:each="commentEntity : ${commentEntities}">
+      <th width="*" th:text="${commentEntity.content}"></th>
+      <td width="10%" th:text="${commentEntity.author}"></td>
+      <td width="15%" th:text="${#temporals.format(commentEntity.created_at,'yyyy-MM-dd')}"></td>
+    </tr>
+  </table>
+</form>
+<form action="/addComment" method="post">
+  <input type="hidden" name="boardEntity.id" th:value="${boardEntity.id}">
+  <table class="comment-table">
+    <tr>
+      <th width="15%">댓글쓰기</th>
+      <td width="*"><textarea name="content" required></textarea></td>
+      <td width="10%"><input type="text" name="author" placeholder="작성자" required></td>
+      <td width="15%"><button type="submit">댓글등록</button></td>
+    </tr>
+  </table>
+</form>
 </body>
 </html>

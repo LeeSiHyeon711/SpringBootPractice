@@ -1,6 +1,8 @@
 package com.example.my_first_spring_boot.controller;
 
+import com.example.my_first_spring_boot.entity.CommentEntity;
 import com.example.my_first_spring_boot.repository.BoardRepository;
+import com.example.my_first_spring_boot.service.CommentService;
 import org.springframework.ui.Model;
 import com.example.my_first_spring_boot.entity.BoardEntity;
 import com.example.my_first_spring_boot.service.BoardService;
@@ -16,6 +18,9 @@ public class BoardController {
     private BoardService boardService;//서비스 가져오기 및 자동 주입
     @Autowired
     private BoardRepository boardRepository;//레파지토리 가져오기 및 자동 주입
+    @Autowired
+    private CommentService commentService;
+
     //게시판 글 목록 컨트롤러
     @GetMapping("/boardList")
     public String boardList(Model model) {
@@ -31,6 +36,9 @@ public class BoardController {
         BoardEntity boardEntity = boardService.findBoardById(id);
         boardService.increaseViews(boardEntity);//조회수 증가
         model.addAttribute("boardEntity", boardEntity);
+        //해당게시물의 댓글보기
+        List<CommentEntity> commentEntities = commentService.findByBoardId(id);
+        model.addAttribute("commentEntities", commentEntities);
         return "viewPost";
     }
     //게시글 작성 폼 보여주기 컨트롤러

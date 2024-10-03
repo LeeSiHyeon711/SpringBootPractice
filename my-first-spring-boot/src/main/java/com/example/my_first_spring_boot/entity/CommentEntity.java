@@ -3,7 +3,7 @@ package com.example.my_first_spring_boot.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.math.BigInteger;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long id;
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
     private String author;
     @CreationTimestamp
     public LocalDateTime created_at;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "post_id")
     public BoardEntity boardEntity;
 
@@ -29,14 +29,15 @@ public class CommentEntity {
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
                 ", created_at=" + created_at +
+                ", boardEntity=" + boardEntity +
                 '}';
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,5 +63,13 @@ public class CommentEntity {
 
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
+    }
+
+    public BoardEntity getBoardEntity() {
+        return boardEntity;
+    }
+
+    public void setBoardEntity(BoardEntity boardEntity) {
+        this.boardEntity = boardEntity;
     }
 }
