@@ -5,6 +5,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Yeon+Sung&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/BoardStyle.css">
     <title>게시글작성</title>
 </head>
 <body>
@@ -27,6 +28,7 @@
             <td colspan="2"><input type="text" name="author" th:value="${session.userName}" readonly></td>
         </tr>
     </table>
+    <input type="hidden" name="user_id" th:value="${session.loggedInUser}">
     <div class="button-group">
         <button type="submit">저장하기</button>
         <button type="reset">RESET</button>

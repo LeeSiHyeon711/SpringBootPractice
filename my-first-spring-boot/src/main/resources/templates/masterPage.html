@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자페이지</title>
+    <link rel="stylesheet" href="/css/BoardStyle.css">
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="#" onclick="showContent('home')">Home</a></li>
+        <li><a href="#" onclick="showContent('users')">Users</a></li>
+        <li><a href="#" onclick="showContent('posts')">Posts</a></li>
+    </ul>
+</nav>
+
+<div id="home" class="content">
+    <h2>Home Page</h2>
+    <p>Welcome to the Admin Dashboard</p>
+</div>
+
+<div id="users" class="content" style="display:none;">
+    <h2>User List</h2>
+    <p>Here is the list of users.</p>
+</div>
+
+<div id="posts" class="content" style="display:none;">
+    <h2>Post List</h2>
+    <p>Here is the list of posts.</p>
+</div>
+<script src="/js/MasterPage.js"></script>
+</body>
+</html>

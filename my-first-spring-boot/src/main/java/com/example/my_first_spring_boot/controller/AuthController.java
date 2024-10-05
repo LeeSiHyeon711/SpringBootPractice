@@ -1,5 +1,6 @@
 package com.example.my_first_spring_boot.controller;
 
+import com.example.my_first_spring_boot.entity.UseEntity;
 import com.example.my_first_spring_boot.service.AuthService;
 import com.example.my_first_spring_boot.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -27,9 +28,10 @@ public class AuthController {
         boolean isAuthenticated = authService.authenticate(id, pass);
         if (isAuthenticated) {
             // UserService를 통해 이름 조회
-            String userName = userService.findNameById(id);
-            session.setAttribute("userName", userName);  // 이름을 세션에 저장
-            session.setAttribute("loggedInUser", id);    // 로그인된 사용자 ID 저장
+            UseEntity user = userService.findById(id);
+            session.setAttribute("userName", user.getName());  // 이름을 세션에 저장
+            session.setAttribute("loggedInUser", user.getId());    // 로그인된 사용자 ID 저장
+            session.setAttribute("userRole", user.getRole()); //역할을 세션에 저장(MASTER,USER)
             return "redirect:/boardList";
         } else {
             return "login";

@@ -10,8 +10,14 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public String findNameById(String id) {
-        return userRepository.findById(id).map(UseEntity::getName).orElse("익명");
+    //사용자 이름을 찾는 메서드
+    public UseEntity findById(String id) {
+        return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+    }
+    //id로 사용자 정보를 찾아오는 메서드
+    public UseEntity findNameById(String id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
     }
     //사용자 정보 저장 서비스
     public void saveUser(UseEntity user) {

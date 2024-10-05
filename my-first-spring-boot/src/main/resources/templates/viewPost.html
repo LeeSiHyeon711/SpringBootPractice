@@ -10,6 +10,15 @@
 </head>
 <body>
 <h2>게시판 개인실습 : 게시글 상세보기</h2>
+<div class="button-group">
+  <form th:action="@{/editBoard/{id}(id=${boardEntity.id})}" th:if="${session.loggedInUser == boardEntity.user.id || session.userRole == 'MASTER'}" method="get">
+    <button type="submit">수정하기</button>
+  </form>
+  <form th:action="@{/deletePost}" th:if="${session.loggedInUser == boardEntity.user.id || session.userRole == 'MASTER'}" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
+    <input type="hidden" name="id" th:value="${boardEntity.id}">
+    <button type="submit">삭제하기</button>
+  </form>
+</div>
 <form method="get">
 <table class="sub-table">
   <colgroup>
@@ -41,14 +50,6 @@
   <form action="/boardList" method="get">
     <button type="button" onclick="location.href='/boardList'">목록보기</button>
   </form>
-  <form th:if="${session.loggedInUser == boardEntity.author}" th:action="@{/editBoard/{id}(id=${boardEntity.id})}" method="get">
-    <input type="hidden" name="id" th:value="${boardEntity.id}">
-    <button type="submit">수정하기</button>
-  </form>
-  <form th:if="${session.loggedInUser == boardEntity.author}" action="/deletePost" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
-    <input type="hidden" name="id" th:value="${boardEntity.id}">
-    <button type="submit">삭제하기</button>
-  </form>
 </div>
 <h3>댓글 목록</h3>
 <form action="/viewPost/" method="get">
@@ -56,7 +57,7 @@
     <tr th:each="commentEntity : ${commentEntities}">
       <th width="*" th:text="${commentEntity.content}"></th>
       <td width="10%" th:text="${commentEntity.author}"></td>
-      <td width="15%" th:text="${#temporals.format(commentEntity.created_at,'yyyy-MM-dd')}"></td>
+      <td width="20%" th:text="${#temporals.format(commentEntity.created_at,'yyyy-MM-dd')}"></td>
     </tr>
   </table>
 </form>

@@ -19,7 +19,9 @@ public class BoardEntity {
     private LocalDateTime createDate;
     private int views;
     private int likes = 0;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private UseEntity user;
     // 처음 저장될 때 현재 시간을 createdAt에 할당
     // 초 단위 값은 제거함
     @PrePersist
@@ -37,7 +39,16 @@ public class BoardEntity {
                 ", createDate=" + createDate +
                 ", views=" + views +
                 ", likes=" + likes +
+                ", user=" + user +
                 '}';
+    }
+
+    public UseEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UseEntity user) {
+        this.user = user;
     }
 
     public int getLikes() { return likes; }

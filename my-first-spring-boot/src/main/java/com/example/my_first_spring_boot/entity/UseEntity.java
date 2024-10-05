@@ -8,12 +8,14 @@ public class UseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_num;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String id;
     @Column(nullable = false, length = 50)
     private String pass;
     @Column(nullable = true, length = 50)
     private String name;
+    @Column(nullable = false)
+    private String role = "USER";
 
     @Override
     public String toString() {
@@ -22,7 +24,16 @@ public class UseEntity {
                 ", id='" + id + '\'' +
                 ", pass='" + pass + '\'' +
                 ", name='" + name + '\'' +
+                ", role='" + role + '\'' +
                 '}';
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getName() {
