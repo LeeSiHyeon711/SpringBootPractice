@@ -5,7 +5,11 @@
     text-decoration: none;
     background-color: #22232c;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
+    /*글꼴 설정*/
+    font-family: "Jua", sans-serif;
+    font-weight: 100;
+    font-style: normal;
 }
 .button-group {
     display: flex;

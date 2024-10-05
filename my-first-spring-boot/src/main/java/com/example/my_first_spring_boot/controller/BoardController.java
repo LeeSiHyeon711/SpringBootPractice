@@ -66,17 +66,31 @@ public class BoardController {
         return "redirect:/boardList";
     }
     //게시글 삭제 컨트롤러
+    //추가: 세션기록과 게시물 작성자 id비교. 일치해야 삭제가능
     @PostMapping("/deletePost")
-    public String deleteBoard(@RequestParam long id) {
-        boardService.deleteBoardById(id);
-        return "redirect:/boardList";
+    public String deleteBoard(@RequestParam long id, HttpSession session) {
+        BoardEntity boardEntity = boardService.findById(id);
+        String loggedInUser = (String) session.getAttribute("loggedInUser");
+        if (boardEntity.getAuthor().equals(loggedInUser)){
+            boardService.deleteBoardById(id);
+            return "redirect:/boardList";
+        } else {
+            return "error/403";
+        }
     }
     //게시글 수정 페이지로 이동(GET 요청)
+    //추가: 세션기록과 게시물 작성자 id비교. 일치해야 수정가능
     @GetMapping("/editBoard/{id}")
-    public String showEditBoardForm(@PathVariable("id") long id, Model model) {
-        BoardEntity boardEntity = boardService.findBoardById(id);
-        model.addAttribute("boardEntity", boardEntity);
-        return "editBoardForm";
+    public String showEditBoardForm(@PathVariable("id") long id, Model model, HttpSession session) {
+        BoardEntity boardEntity = boardService.findById(id);
+        String loggedInUser = (String) session.getAttribute("loggedInUser");
+        if (boardEntity.getAuthor().equals(loggedInUser)){
+            model.addAttribute("boardEntity", boardEntity);
+            return "editBoardForm";
+        }else {
+            return "error/403";
+        }
+
     }
     //게시글 수정하기 컨트롤러(POST 요청)
     @PostMapping("/update/{id}")
