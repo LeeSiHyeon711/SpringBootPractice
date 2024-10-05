@@ -3,6 +3,7 @@ package com.example.my_first_spring_boot.controller;
 import com.example.my_first_spring_boot.entity.CommentEntity;
 import com.example.my_first_spring_boot.repository.BoardRepository;
 import com.example.my_first_spring_boot.service.CommentService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import com.example.my_first_spring_boot.entity.BoardEntity;
 import com.example.my_first_spring_boot.service.BoardService;
@@ -41,15 +42,20 @@ public class BoardController {
         model.addAttribute("commentEntities", commentEntities);
         return "viewPost";
     }
-    //게시글 작성 폼 보여주기 컨트롤러
+    //게시글 작성 폼 보여주기 컨트롤러(로그인 시 세션에 저장된 이름을 불러옴)
     @GetMapping("/addBoardForm")
-    public String showAddBoardForm(Model model) {
+    public String showAddBoardForm(Model model, HttpSession httpSession) {
+        BoardEntity boardEntity = new BoardEntity();
+        String loggedInUser = (String) httpSession.getAttribute("userName");
+        boardEntity.setAuthor(loggedInUser);
         model.addAttribute("boardEntity", new BoardEntity());
         return "addBoardForm";
     }
-    //게시글 등록 정보 보내기 컨트롤러
+    //게시글 등록 정보 보내기 컨트롤러(로그인 시 세션에 저장된 이름을 전송함)
     @PostMapping("/addBoard")
-    public String addBoard(@ModelAttribute BoardEntity boardEntity) {
+    public String addBoard(@ModelAttribute BoardEntity boardEntity, HttpSession httpSession) {
+        String loggedInUser = (String) httpSession.getAttribute("userName");
+        boardEntity.setAuthor(loggedInUser);
         boardService.saveBoard(boardEntity);
         return "redirect:/boardList";
     }

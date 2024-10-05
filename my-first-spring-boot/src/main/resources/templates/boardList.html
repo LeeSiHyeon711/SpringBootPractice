@@ -34,7 +34,9 @@
         </tr>
     </table>
     <div class="button-group">
-        <button type="button" onclick="location.href='/addBoardForm'">글작성</button>
+        <button type="button" th:if="${session.loggedInUser == null}" onclick="location.href='/login'">로그인</button>
+        <button type="button" th:if="${session.loggedInUser != null}" onclick="location.href='/addBoardForm'">글작성</button>
+        <button type="button" th:if="${session.loggedInUser != null}" onclick="location.href='/logout'">로그아웃</button>
     </div>
 </form>
 </body>

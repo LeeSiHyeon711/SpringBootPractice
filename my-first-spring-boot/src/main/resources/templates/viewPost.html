@@ -38,11 +38,11 @@
   <form action="/boardList" method="get">
     <button type="button" onclick="location.href='/boardList'">목록보기</button>
   </form>
-  <form th:action="@{/editBoard/{id}(id=${boardEntity.id})}" method="get">
+  <form th:if="${session.loggedInUser != null}" th:action="@{/editBoard/{id}(id=${boardEntity.id})}" method="get">
     <input type="hidden" name="id" th:value="${boardEntity.id}">
     <button type="submit">수정하기</button>
   </form>
-  <form action="/deletePost" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
+  <form th:if="${session.loggedInUser != null}" action="/deletePost" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
     <input type="hidden" name="id" th:value="${boardEntity.id}">
     <button type="submit">삭제하기</button>
   </form>
@@ -57,13 +57,14 @@
     </tr>
   </table>
 </form>
-<form action="/addComment" method="post">
-  <input type="hidden" name="boardEntity.id" th:value="${boardEntity.id}">
+<form action="/addComment" method="post" th:if="${session.loggedInUser != null}">
+  <input type="hidden" name="name" th:value="${session.userName}">
   <table class="comment-table">
     <tr>
       <th width="15%">댓글쓰기</th>
+      <input type="hidden" name="boardId" th:value="${boardEntity.id}">
+      <input type="hidden" name="author" th:value="${session.userName}">
       <td width="*"><textarea name="content" required></textarea></td>
-      <td width="20%"><input type="text" name="author" placeholder="작성자" required></td>
     </tr>
   </table>
   <button type="submit">댓글등록</button>

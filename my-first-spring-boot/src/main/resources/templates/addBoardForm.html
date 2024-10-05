@@ -21,7 +21,8 @@
         </tr>
         <tr>
             <th>작성자</th>
-            <td colspan="2"><input type="text" name="author" required></td>
+            <input type="hidden" name="name" th:value="${session.userName}">
+            <td colspan="2"><input type="text" name="author" th:value="${session.userName}" readonly></td>
         </tr>
     </table>
     <div class="button-group">

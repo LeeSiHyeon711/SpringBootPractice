@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class BoardService {
     @Autowired
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
     //게시글 목록을 불러오는 서비스
     public List<BoardEntity> findAllBoards() {
         return boardRepository.findAll();
@@ -46,11 +46,19 @@ public class BoardService {
         return boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다"));
     }
-    //게시글 수정
+    //게시글 수정 서비스
     public void editBoard(Long id, BoardEntity editBoard) {
         BoardEntity boardEntity = getBoardById(id);
         boardEntity.setTitle(editBoard.getTitle());
         boardEntity.setContent(editBoard.getContent());
         boardRepository.save(boardEntity);
+    }
+    //생성자 주입
+    public BoardService(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+    //ID로 게시글 찾기
+    public BoardEntity findById(Long id) {
+        return boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("게시글을 찾을 수 없습니다"));
     }
 }

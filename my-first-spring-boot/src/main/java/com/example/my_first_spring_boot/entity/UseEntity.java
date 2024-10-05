@@ -12,9 +12,8 @@ public class UseEntity {
     private String id;
     @Column(nullable = false, length = 50)
     private String pass;
-    @ManyToOne
-    @JoinColumn(name = "name")
-    public CommentEntity comment;
+    @Column(nullable = true, length = 50)
+    private String name;
 
     @Override
     public String toString() {
@@ -22,8 +21,16 @@ public class UseEntity {
                 "user_num=" + user_num +
                 ", id='" + id + '\'' +
                 ", pass='" + pass + '\'' +
-                ", comment=" + comment +
+                ", name='" + name + '\'' +
                 '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getUser_num() {
@@ -48,13 +55,5 @@ public class UseEntity {
 
     public void setPass(String pass) {
         this.pass = pass;
-    }
-
-    public CommentEntity getComment() {
-        return comment;
-    }
-
-    public void setComment(CommentEntity comment) {
-        this.comment = comment;
     }
 }
