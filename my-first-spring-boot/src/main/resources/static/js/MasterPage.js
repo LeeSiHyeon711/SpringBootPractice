@@ -3,25 +3,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+        var target = this.getAttribute('href');
+        if (target !== '#') {  // 빈 #일 때는 실행하지 않음
+            document.querySelector(target).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     });
 });
-// 네비게이션 바를 상단에 고정시키는 스크립트
-window.onscroll = function() {stickyNav()};
-
-// 네비게이션 바의 위치를 가져옴
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
-
-function stickyNav() {
-    if (window.pageYOffset >= sticky) {
-        navbar.classList.add("sticky");
+document.addEventListener('DOMContentLoaded', function() {
+    // URL에서 쿼리 파라미터 'section'을 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get('section');
+    console.log("현재 섹션: ",section);
+    // 섹션에 따라 해당 내용을 보여줌
+    if (section) {
+        showContent(section);  // 'posts', 'users', 'home' 중 하나를 showContent 함수로 전달
     } else {
-        navbar.classList.remove("sticky");
+        showContent('home');  // 기본적으로 공지사항을 표시
     }
-}
+});
 function showContent(section) {
     // 모든 content 섹션을 숨기기
     const contents = document.querySelectorAll('.content');
@@ -30,3 +31,14 @@ function showContent(section) {
     // 선택한 섹션만 보이게 설정
     document.getElementById(section).style.display = 'block';
 }
+//관리자용 체크박스 전체 선택하기
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('selectAll').onclick = function() {
+        var checkboxes = document.getElementsByName('boardIds');
+        console.log("선택된 체크박스 개수", checkboxes.length);
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    }
+});
+

@@ -1,33 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Yeon+Sung&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>관리자페이지</title>
-    <link rel="stylesheet" href="/css/BoardStyle.css">
 </head>
 <body>
-<nav>
+<link rel="stylesheet" href="/css/BoardStyle.css">
+<nav class="nav">
+    <h1>게시판 개인실습 : 관리자 페이지</h1>
     <ul>
-        <li><a href="#" onclick="showContent('home')">Home</a></li>
-        <li><a href="#" onclick="showContent('users')">Users</a></li>
-        <li><a href="#" onclick="showContent('posts')">Posts</a></li>
+        <li><a href="#" onclick="showContent('home')">공지사항</a></li>
+        <li><a href="#" onclick="showContent('users')">유저관리</a></li>
+        <li><a href="#" onclick="showContent('posts')">게시물관리</a></li>
     </ul>
+    <div class="button-group">
+        <button type="button" onclick="location.href='/boardList'">목록보기</button>
+    </div>
 </nav>
-
-<div id="home" class="content">
-    <h2>Home Page</h2>
-    <p>Welcome to the Admin Dashboard</p>
+<div class="master-board">
+    <form method="get">
+        <div id="home" class="content">
+            <h2>공지사항</h2>
+            <p>로그인하면 바로 관리자 모드로 전환되도록 수정함. 관리자 페이지 정보표시 구축중</p>
+            <p>게시물 관리 업데이트. 개별삭제는 잘 작동함. 전체삭제테스트필요(전체삭제할 일이 있을까 싶음..)</p>
+        </div>
+        <div id="users" class="content" style="display:none;">
+            <h2>유저관리</h2>
+            <p>뚝딱뚝딱. 만드는중~</p>
+        </div>
+    </form>
+    <form method="post" th:action="@{/deletePosts}">
+        <div id="posts" class="content" style="display:none;">
+            <h2>게시물 삭제</h2>
+            <table class="main-table">
+                <tr>
+                    <th colspan="5">총 게시물 수</th>
+                    <th colspan="3" th:text="${totalCount}"></th>
+                </tr>
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th width="5%">번호</th>
+                    <th width="10%">제목</th>
+                    <th width="*">내용</th>
+                    <th width="8%">작성자</th>
+                    <th width="8%">조회수</th>
+                    <th width="10%">작성일</th>
+                    <th width="8%">좋아요</th>
+                </tr>
+                <tr th:each="boardEntity : ${boardEntities}">
+                    <td><input type="checkbox" name="boardIds" th:value="${boardEntity.id}"></td>
+                    <td th:text="${boardEntity.id}" style="text-align: center"></td>
+                    <td th:text="${boardEntity.title}"></td>
+                    <td th:text="${boardEntity.content}"></td>
+                    <td th:text="${boardEntity.author}" style="text-align: center"></td>
+                    <td th:text="${boardEntity.views}" style="text-align: center"></td>
+                    <td th:text="${#temporals.format(boardEntity.createDate, 'yyyy.MM.dd HH:mm')}" style="text-align: center"></td>
+                    <td th:text="${boardEntity.likes}" style="text-align: center"></td>
+                </tr>
+            </table>
+            <button type="submit">삭제</button>
+        </div>
+    </form>
+    <script src="/js/MasterPage.js"></script>
 </div>
-
-<div id="users" class="content" style="display:none;">
-    <h2>User List</h2>
-    <p>Here is the list of users.</p>
-</div>
-
-<div id="posts" class="content" style="display:none;">
-    <h2>Post List</h2>
-    <p>Here is the list of posts.</p>
-</div>
-<script src="/js/MasterPage.js"></script>
 </body>
 </html>

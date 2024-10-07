@@ -26,10 +26,6 @@
     <col width="15%"/><col width="*"/>
   </colgroup>
   <tr>
-    <th>번호</th><td th:text="${boardEntity.id}" style="text-align: center"></td>
-    <th>조회수</th><td th:text="${boardEntity.views}" style="text-align: center"></td>
-  </tr>
-  <tr>
     <th>제목</th><td th:text="${boardEntity.title}" style="text-align: center"></td>
     <th>작성자</th><td th:text="${boardEntity.author}" style="text-align: center"></td>
   </tr>
@@ -37,8 +33,7 @@
     <th>내용</th><td colspan="3" th:text="${boardEntity.content}"></td>
   </tr>
   <tr>
-    <th>등록 시간</th><td th:text="${#temporals.format(boardEntity.createDate, 'HH시 mm분')}" style="text-align: right"></td>
-    <th>좋아요</th><td th:text="${boardEntity.likes}" style="text-align: center"></td>
+    <th>좋아요</th><td colspan="3" th:text="${boardEntity.likes}" style="text-align: center"></td>
   </tr>
 </table>
 </form>
@@ -56,8 +51,7 @@
   <table class="comment-list-table">
     <tr th:each="commentEntity : ${commentEntities}">
       <th width="*" th:text="${commentEntity.content}"></th>
-      <td width="10%" th:text="${commentEntity.author}"></td>
-      <td width="20%" th:text="${#temporals.format(commentEntity.created_at,'yyyy-MM-dd')}"></td>
+      <td width="20%" th:text="${commentEntity.author}"></td>
     </tr>
   </table>
 </form>

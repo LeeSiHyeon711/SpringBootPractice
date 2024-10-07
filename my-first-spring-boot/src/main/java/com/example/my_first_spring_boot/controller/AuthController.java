@@ -27,12 +27,15 @@ public class AuthController {
     public String login(HttpSession session, @RequestParam("id") String id, @RequestParam("pass") String pass) {
         boolean isAuthenticated = authService.authenticate(id, pass);
         if (isAuthenticated) {
-            // UserService를 통해 이름 조회
             UseEntity user = userService.findById(id);
             session.setAttribute("userName", user.getName());  // 이름을 세션에 저장
             session.setAttribute("loggedInUser", user.getId());    // 로그인된 사용자 ID 저장
             session.setAttribute("userRole", user.getRole()); //역할을 세션에 저장(MASTER,USER)
-            return "redirect:/boardList";
+            if ("MASTER".equals(user.getRole())) { //관리자로 로그인할경우 관리자페이지로 바로 넘어감
+                return "redirect:/masterPage";
+            }else {
+                return "redirect:/boardList";
+            }
         } else {
             return "login";
         }

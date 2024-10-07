@@ -2,7 +2,10 @@ package com.example.my_first_spring_boot.service;
 
 import com.example.my_first_spring_boot.entity.UseEntity;
 import com.example.my_first_spring_boot.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
