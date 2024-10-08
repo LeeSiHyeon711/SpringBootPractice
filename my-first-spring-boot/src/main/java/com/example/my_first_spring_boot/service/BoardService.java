@@ -1,10 +1,12 @@
 package com.example.my_first_spring_boot.service;
 
 import com.example.my_first_spring_boot.entity.BoardEntity;
+import com.example.my_first_spring_boot.entity.MasterBoardEntity;
 import com.example.my_first_spring_boot.repository.BoardRepository;
+import com.example.my_first_spring_boot.repository.MasterBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public class BoardService {
     @Autowired
     private final BoardRepository boardRepository;
+    private final MasterBoardRepository masterBoardRepository;
     //게시글 목록을 불러오는 서비스
     public List<BoardEntity> findAllBoards() {
         return boardRepository.findAll();
@@ -28,8 +31,15 @@ public class BoardService {
         boardRepository.save(boardEntity);
     }
     //게시글 등록 서비스
+    @Transactional
     public void saveBoard(BoardEntity boardEntity) {
-        boardRepository.save(boardEntity);
+        this.boardRepository.save(boardEntity);
+    }
+    //관리자,유저용 게시글 동시 등록 서비스
+    @Transactional
+    public void saveBoardWithMaster(BoardEntity boardEntity, MasterBoardEntity masterBoardEntity) {
+        this.boardRepository.save(boardEntity);
+        this.masterBoardRepository.save(masterBoardEntity);
     }
     //좋아요 버튼 서비스
     public void increaseLikes(Long id) {
@@ -54,11 +64,16 @@ public class BoardService {
         boardRepository.save(boardEntity);
     }
     //생성자 주입
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository, MasterBoardRepository masterBoardRepository) {
         this.boardRepository = boardRepository;
+        this.masterBoardRepository = masterBoardRepository;
     }
     //ID로 게시글 찾기
     public BoardEntity findById(Long id) {
         return boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("게시글을 찾을 수 없습니다"));
+    }
+    //게시글 최신순으로 정렬
+    public List<BoardEntity> getAllBoards(){
+        return boardRepository.findAllByOrderByCreateDateDesc();
     }
 }

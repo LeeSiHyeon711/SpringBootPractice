@@ -26,4 +26,8 @@ public class UserService {
     public void saveUser(UseEntity user) {
         userRepository.save(user);
     }
+    //모든 유저 정보 서비스
+    public List<UseEntity> getAllUsers() {
+        return userRepository.findAll();
+    }
 }

@@ -1,14 +1,16 @@
 package com.example.my_first_spring_boot.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "userBoard")
-public class BoardEntity {
+@Table(name = "masterBoard")
+public class MasterBoardEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
     @Column(nullable = false, length = 50)
     private String title;
@@ -19,19 +21,12 @@ public class BoardEntity {
     private LocalDateTime createDate;
     private int views;
     private int likes = 0;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private UseEntity user;
-    // 처음 저장될 때 현재 시간을 createdAt에 할당
-    // 초 단위 값은 제거함
-    @PrePersist
-    protected void onCreate(){
-        this.createDate = LocalDateTime.now().withSecond(0).withNano(0);
-    }
+    @Column(nullable = false, length = 20)
+    private String user_id;
 
     @Override
     public String toString() {
-        return "BoardEntity{" +
+        return "MasterBoardEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
@@ -39,21 +34,9 @@ public class BoardEntity {
                 ", createDate=" + createDate +
                 ", views=" + views +
                 ", likes=" + likes +
-                ", user=" + user +
+                ", user_id='" + user_id + '\'' +
                 '}';
     }
-
-    public UseEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UseEntity user) {
-        this.user = user;
-    }
-
-    public int getLikes() { return likes; }
-
-    public void setLikes(int likes) { this.likes = likes; }
 
     public Long getId() {
         return id;
@@ -91,8 +74,8 @@ public class BoardEntity {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createdAt) {
-        this.createDate = createdAt;
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 
     public int getViews() {
@@ -101,5 +84,21 @@ public class BoardEntity {
 
     public void setViews(int views) {
         this.views = views;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }

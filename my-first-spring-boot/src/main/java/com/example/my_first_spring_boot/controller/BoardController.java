@@ -1,14 +1,13 @@
 package com.example.my_first_spring_boot.controller;
 
 import com.example.my_first_spring_boot.entity.CommentEntity;
+import com.example.my_first_spring_boot.entity.MasterBoardEntity;
 import com.example.my_first_spring_boot.entity.UseEntity;
 import com.example.my_first_spring_boot.repository.BoardRepository;
-import com.example.my_first_spring_boot.service.CommentService;
-import com.example.my_first_spring_boot.service.UserService;
+import com.example.my_first_spring_boot.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import com.example.my_first_spring_boot.entity.BoardEntity;
-import com.example.my_first_spring_boot.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +24,15 @@ public class BoardController {
     private CommentService commentService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MasterBoardService masterBoardService;
+    @Autowired
+    private AuthService authService;
 
     //게시판 글 목록 컨트롤러
     @GetMapping("/boardList")
     public String boardList(Model model) {
-        List<BoardEntity> boardEntities = boardService.findAllBoards();
+        List<BoardEntity> boardEntities = boardService.getAllBoards();
         long totalCount = boardService.totalBoards();
         model.addAttribute("boardEntities", boardEntities);
         model.addAttribute("totalCount", totalCount);
@@ -56,15 +59,31 @@ public class BoardController {
         return "addBoardForm";
     }
     //게시글 등록 정보 보내기 컨트롤러(로그인 시 세션에 저장된 이름, id를 전송함)
+    //추가 : 관리자 테이블에도 게시글 정보 동시에 보
     @PostMapping("/addBoard")
     public String addBoard(@ModelAttribute BoardEntity boardEntity, HttpSession httpSession) {
         String loggedInUser = (String) httpSession.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+        }
         UseEntity user = userService.findById(loggedInUser);
         boardEntity.setUser(user);
         boardEntity.setAuthor(user.getName());
         boardService.saveBoard(boardEntity);
+        // MasterBoardEntity 생성
+        MasterBoardEntity masterBoardEntity = new MasterBoardEntity();
+        masterBoardEntity.setId(boardEntity.getId());
+        masterBoardEntity.setTitle(boardEntity.getTitle());
+        masterBoardEntity.setAuthor(boardEntity.getAuthor());
+        masterBoardEntity.setContent(boardEntity.getContent());
+        masterBoardEntity.setCreateDate(boardEntity.getCreateDate());
+        masterBoardEntity.setUser_id(user.getId());
+        // 두 개의 엔티티를 함께 저장하도록 서비스 호출
+        boardService.saveBoardWithMaster(boardEntity, masterBoardEntity);
         return "redirect:/boardList";
     }
+
+
     //좋아요 버튼 클릭 정보 보내기 컨트롤러
     @PostMapping("/like")
     public String likeBoard(@RequestParam long id) {

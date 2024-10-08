@@ -29,5 +29,4 @@ public class UserController {
         userService.saveUser(user);
         return "redirect:/login";
     }
-    // 유저 목록 조회
 }
