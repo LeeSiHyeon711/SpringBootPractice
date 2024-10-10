@@ -37,7 +37,12 @@ public class MasterListController {
         //유저 목록 가져오기
         List<UseEntity> users = userService.getAllUsers();
         model.addAttribute("users", users);
+        //유저 총인원 가져오기
+        long userCount = userService.totalUsers();
+        model.addAttribute("userCount", userCount);
         return "masterPage";
+
+
     }
     // 관리자용 게시글 삭제 컨트롤러
     @PostMapping("/deletePosts")

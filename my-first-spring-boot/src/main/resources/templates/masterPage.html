@@ -15,6 +15,7 @@
         <li><a href="#" onclick="showContent('home')">공지사항</a></li>
         <li><a href="#" onclick="showContent('users')">유저관리</a></li>
         <li><a href="#" onclick="showContent('posts')">게시물관리</a></li>
+<!--        <li><a href="#" onclick="showContent('content')">댓글관리</a></li>-->
     </ul>
     <div class="button-group">
         <button type="button" onclick="location.href='/boardList'">목록보기</button>
@@ -25,23 +26,32 @@
         <div id="home" class="content">
             <h2>관리자 공지</h2>
             <p>2024-10-06 로그인하면 바로 관리자 모드로 전환되도록 수정함. 관리자 페이지 정보표시 구축중</p>
-            <p>2024-10-07 게시물 관리 업데이트. 개별삭제는 잘 작동함. 전체삭제테스트필요(전체삭제할 일이 있을까 싶음..)</p>
-            <p>2024-10-08 관리자 보드와 유저 보드 통합 및 초기화 진행.</p>
+            <p>2024-10-07 게시물 관리 업데이트. 개별삭제는 잘 작동함. 전체삭제테스트필요</p>
+            <p>2024-10-08 전체삭제 테스트 완료. 관리자 보드와 유저 보드 통합 및 초기화 진행.</p>
             <p>2024-10-09 유저관리 신메뉴 개발. 아직까진 유저 총 조회밖에 안됨.</p>
+            <p>2024-10-09 회원가입폼 입력정보 추가. not null속성은 부여하지않아서 자유롭게 서술가능</p>
         </div>
         <div id="users" class="content" style="display:none;">
             <h2>유저목록</h2>
             <table class="main-table">
                 <tr>
+                    <th colspan="5">총 인원수</th>
+                    <th th:text="${userCount}"></th>
+                </tr>
+                <tr>
                     <th>아이디</th>
                     <th>이름</th>
-                    <th>비밀번호</th>
+                    <th>전화번호</th>
+                    <th>이메일</th>
+                    <th>생년월일</th>
                     <th>권한</th>
                 </tr>
                 <tr th:each="useEntity : ${users}">
                     <td th:text="${useEntity.id}" style="text-align: center"></td>
                     <td th:text="${useEntity.name}" style="text-align: center"></td>
-                    <td th:text="${useEntity.pass}" style="text-align: center"></td>
+                    <td th:text="${useEntity.phone}" style="text-align: center"></td>
+                    <td th:text="${useEntity.e_mail}" style="text-align: center"></td>
+                    <td th:text="${useEntity.birth}" style="text-align: center"></td>
                     <td th:text="${useEntity.role}" style="text-align: center"></td>
                 </tr>
             </table>

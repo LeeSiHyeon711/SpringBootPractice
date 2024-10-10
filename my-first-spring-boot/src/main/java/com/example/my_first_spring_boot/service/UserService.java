@@ -30,4 +30,6 @@ public class UserService {
     public List<UseEntity> getAllUsers() {
         return userRepository.findAll();
     }
+    //모든 유저 인원수 정보 서비스
+    public long totalUsers() {return userRepository.count();}
 }
