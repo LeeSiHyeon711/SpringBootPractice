@@ -26,7 +26,8 @@ public class BoardService {
         return boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid Board Id:"+id));
     }
     //게시글 조회시 조회수 증가 서비스
-    public void increaseViews(BoardEntity boardEntity) {
+    public void increaseViews(Long id) {
+        BoardEntity boardEntity = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Board Id: " + id));
         boardEntity.setViews(boardEntity.getViews() + 1);
         boardRepository.save(boardEntity);
     }
@@ -43,6 +44,7 @@ public class BoardService {
     }
     //좋아요 버튼 서비스
     public void increaseLikes(Long id) {
+        //유저보드 좋아요카운트 증가
         BoardEntity boardEntity = boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid Board Id:"+id));
         boardEntity.setLikes(boardEntity.getLikes() + 1);
         boardRepository.save(boardEntity);

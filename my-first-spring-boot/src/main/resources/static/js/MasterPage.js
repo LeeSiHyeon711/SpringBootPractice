@@ -31,14 +31,21 @@ function showContent(section) {
     // 선택한 섹션만 보이게 설정
     document.getElementById(section).style.display = 'block';
 }
-//관리자용 체크박스 전체 선택하기
+//관리자용 게시글 체크박스 전체 선택하기
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('selectAll').onclick = function() {
+    document.getElementById('selectAllBoards').onclick = function() {
         var checkboxes = document.getElementsByName('boardIds');
-        console.log("선택된 체크박스 개수", checkboxes.length);
         for (var checkbox of checkboxes) {
             checkbox.checked = this.checked;
         }
     }
 });
-
+//관리자용 댓글 체크박스 전체 선택하기
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('selectAllComments').onclick = function() {
+        var checkboxes = document.getElementsByName('commentId');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    }
+});

@@ -15,7 +15,7 @@
         <li><a href="#" onclick="showContent('home')">공지사항</a></li>
         <li><a href="#" onclick="showContent('users')">유저관리</a></li>
         <li><a href="#" onclick="showContent('posts')">게시물관리</a></li>
-<!--        <li><a href="#" onclick="showContent('content')">댓글관리</a></li>-->
+        <li><a href="#" onclick="showContent('comment')">댓글관리</a></li>
     </ul>
     <div class="button-group">
         <button type="button" onclick="location.href='/boardList'">목록보기</button>
@@ -30,6 +30,7 @@
             <p>2024-10-08 전체삭제 테스트 완료. 관리자 보드와 유저 보드 통합 및 초기화 진행.</p>
             <p>2024-10-09 유저관리 신메뉴 개발. 아직까진 유저 총 조회밖에 안됨.</p>
             <p>2024-10-09 회원가입폼 입력정보 추가. not null속성은 부여하지않아서 자유롭게 서술가능</p>
+            <p>2024-10-10 댓글관리 신메뉴 개발. 댓글 조회 및 삭제가능. 전체삭제도 가능하지만 역시 테스트 안해봄</p>
         </div>
         <div id="users" class="content" style="display:none;">
             <h2>유저목록</h2>
@@ -66,7 +67,7 @@
                     <th colspan="3" th:text="${totalCount}"></th>
                 </tr>
                 <tr>
-                    <th><input type="checkbox" id="selectAll"></th>
+                    <th><input type="checkbox" id="selectAllBoards"></th>
                     <th width="5%">번호</th>
                     <th width="10%">제목</th>
                     <th width="*">내용</th>
@@ -84,6 +85,26 @@
                     <td th:text="${boardEntity.views}" style="text-align: center"></td>
                     <td th:text="${#temporals.format(boardEntity.createDate, 'yyyy.MM.dd HH:mm')}" style="text-align: center"></td>
                     <td th:text="${boardEntity.likes}" style="text-align: center"></td>
+                </tr>
+            </table>
+            <button type="submit">삭제</button>
+        </div>
+    </form>
+    <form method="post" th:action="@{/deleteComments}">
+        <div id="comment" class="content">
+            <h2>댓글삭제</h2>
+            <table class="main-table">
+                <tr>
+                    <th><input type="checkbox" id="selectAllComments"></th>
+                    <th>댓글내용</th>
+                    <th>작성자</th>
+                    <th>작성일자</th>
+                </tr>
+                <tr th:each="commentEntity : ${comments}">
+                    <td><input type="checkbox" name="commentId" th:value="${commentEntity.id}"></td>
+                    <td th:text="${commentEntity.content}"></td>
+                    <td th:text="${commentEntity.author}" style="text-align: center"></td>
+                    <td th:text="${#temporals.format(commentEntity.created_at, 'yyyy.MM.dd HH:mm:ss')}" style="text-align: center"></td>
                 </tr>
             </table>
             <button type="submit">삭제</button>

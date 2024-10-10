@@ -27,4 +27,12 @@ public class CommentService {
     public void saveComment(CommentEntity commentEntity) {
         commentRepository.save(commentEntity);
     }
+    //댓글 목록 불러오기 서비스
+    public List<CommentEntity> findAllComment() {
+        return commentRepository.findAll();
+    }
+    //댓글 삭제 서비스
+    public void deleteComments(List<Long> commentId) {
+        commentRepository.deleteAllById(commentId);
+    }
 }

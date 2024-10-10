@@ -6,6 +6,7 @@ import com.example.my_first_spring_boot.entity.UseEntity;
 import com.example.my_first_spring_boot.repository.BoardRepository;
 import com.example.my_first_spring_boot.service.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import com.example.my_first_spring_boot.entity.BoardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 @Controller
 public class BoardController {
     @Autowired
-    private BoardService boardService;//서비스 가져오기 및 자동 주입
+    private final BoardService boardService;//서비스 가져오기 및 자동 주입
     @Autowired
     private BoardRepository boardRepository;//레파지토리 가져오기 및 자동 주입
     @Autowired
@@ -25,9 +26,14 @@ public class BoardController {
     @Autowired
     private UserService userService;
     @Autowired
-    private MasterBoardService masterBoardService;
+    private final MasterBoardService masterBoardService;
     @Autowired
     private AuthService authService;
+
+    public BoardController(BoardService boardService, MasterBoardService masterBoardService) {
+        this.boardService = boardService;
+        this.masterBoardService = masterBoardService;
+    }
 
     //게시판 글 목록 컨트롤러
     @GetMapping("/boardList")
@@ -42,7 +48,7 @@ public class BoardController {
     @GetMapping("/viewPost/{id}")
     public String viewPost(@PathVariable long id, Model model) {
         BoardEntity boardEntity = boardService.findBoardById(id);
-        boardService.increaseViews(boardEntity);//조회수 증가
+        boardService.increaseViews(id);//유저보드 조회수 증가
         model.addAttribute("boardEntity", boardEntity);
         //해당게시물의 댓글보기
         List<CommentEntity> commentEntities = commentService.findByBoardId(id);
@@ -77,13 +83,11 @@ public class BoardController {
         masterBoardEntity.setAuthor(boardEntity.getAuthor());
         masterBoardEntity.setContent(boardEntity.getContent());
         masterBoardEntity.setCreateDate(boardEntity.getCreateDate());
-        masterBoardEntity.setUser_id(user.getId());
+        masterBoardEntity.setUser(boardEntity.getUser());
         // 두 개의 엔티티를 함께 저장하도록 서비스 호출
         boardService.saveBoardWithMaster(boardEntity, masterBoardEntity);
         return "redirect:/boardList";
     }
-
-
     //좋아요 버튼 클릭 정보 보내기 컨트롤러
     @PostMapping("/like")
     public String likeBoard(@RequestParam long id) {

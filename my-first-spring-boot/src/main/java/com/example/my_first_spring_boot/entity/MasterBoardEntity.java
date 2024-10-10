@@ -1,9 +1,6 @@
 package com.example.my_first_spring_boot.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 @Entity
@@ -21,8 +18,9 @@ public class MasterBoardEntity {
     private LocalDateTime createDate;
     private int views;
     private int likes = 0;
-    @Column(nullable = false, length = 20)
-    private String user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UseEntity user;
 
     @Override
     public String toString() {
@@ -34,8 +32,16 @@ public class MasterBoardEntity {
                 ", createDate=" + createDate +
                 ", views=" + views +
                 ", likes=" + likes +
-                ", user_id='" + user_id + '\'' +
+                ", user=" + user +
                 '}';
+    }
+
+    public UseEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UseEntity user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -94,11 +100,4 @@ public class MasterBoardEntity {
         this.likes = likes;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
 }
