@@ -2,11 +2,9 @@ package com.example.my_first_spring_boot.controller;
 
 import com.example.my_first_spring_boot.entity.BoardEntity;
 import com.example.my_first_spring_boot.entity.CommentEntity;
+import com.example.my_first_spring_boot.entity.ProductEntity;
 import com.example.my_first_spring_boot.entity.UseEntity;
-import com.example.my_first_spring_boot.service.BoardService;
-import com.example.my_first_spring_boot.service.CommentService;
-import com.example.my_first_spring_boot.service.MasterBoardService;
-import com.example.my_first_spring_boot.service.UserService;
+import com.example.my_first_spring_boot.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +20,15 @@ public class MasterListController {
     private final BoardService boardService;
     private final UserService userService;
     private final CommentService commentService;
+    private final ProductService productService;
 
-    public MasterListController(MasterBoardService MasterBoardService, MasterBoardService masterBoardService, BoardService boardService, UserService userService, CommentService commentService) {
+    public MasterListController(MasterBoardService MasterBoardService, MasterBoardService masterBoardService, BoardService boardService, UserService userService, CommentService commentService, ProductService productService) {
         this.MasterBoardService = MasterBoardService;
         this.masterBoardService = masterBoardService;
         this.boardService = boardService;
         this.userService = userService;
         this.commentService = commentService;
+        this.productService = productService;
     }
     //관리자용 게시판 글 목록 컨트롤러
     @GetMapping("/masterPage")
@@ -47,6 +47,9 @@ public class MasterListController {
         //댓글 목록 가져오기
         List<CommentEntity> comments = commentService.findAllComment();
         model.addAttribute("comments", comments);
+        //상품 리스트 가져오기
+        List<ProductEntity> products = productService.getAllProducts();
+        model.addAttribute("products", products);
         return "masterPage";
     }
     // 관리자용 게시글 삭제 컨트롤러

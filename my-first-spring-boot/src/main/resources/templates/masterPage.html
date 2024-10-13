@@ -13,6 +13,7 @@
     <h1>게시판 개인실습 : 관리자 페이지</h1>
     <ul>
         <li><a href="#" onclick="showContent('home')">공지사항</a></li>
+        <li><a href="#" onclick="showContent('product')">쇼핑몰관리</a></li>
         <li><a href="#" onclick="showContent('users')">유저관리</a></li>
         <li><a href="#" onclick="showContent('posts')">게시물관리</a></li>
         <li><a href="#" onclick="showContent('comment')">댓글관리</a></li>
@@ -31,6 +32,29 @@
             <p>2024-10-09 유저관리 신메뉴 개발. 아직까진 유저 총 조회밖에 안됨.</p>
             <p>2024-10-09 회원가입폼 입력정보 추가. not null속성은 부여하지않아서 자유롭게 서술가능</p>
             <p>2024-10-10 댓글관리 신메뉴 개발. 댓글 조회 및 삭제가능. 전체삭제도 가능하지만 역시 테스트 안해봄</p>
+            <p>2024-10-11 댓글 전체 삭제 테스트 완료. 잘 작동함...</p>
+            <p>2024-10-13 쇼핑몰 프로젝트 시작. 상품 상세페이지까지는 구현완료</p>
+        </div>
+        <div id="product" class="content">
+            <h2>상품관리</h2>
+            <table class="main-table">
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>가격</th>
+                    <th>상품설명</th>
+                    <th>등록일</th>
+                    <th>누적판매량</th>
+                </tr>
+                <tr th:each="products : ${products}">
+                    <td th:text="${products.id}" style="text-align: center"></td>
+                    <td th:text="${products.productName}" style="text-align: center"></td>
+                    <td th:text="${products.price}" style="text-align: center"></td>
+                    <td th:text="${products.description}" style="text-align: center"></td>
+                    <td th:text="${#temporals.format(products.createdAt, 'yyyy.MM.dd HH:mm')}" style="text-align: center"></td>
+                    <td th:text="${products.saleVolume}" style="text-align: center"></td>
+                </tr>
+            </table>
         </div>
         <div id="users" class="content" style="display:none;">
             <h2>유저목록</h2>

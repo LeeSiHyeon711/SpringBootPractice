@@ -34,7 +34,7 @@ public class AuthController {
             if ("MASTER".equals(user.getRole())) { //관리자로 로그인할경우 관리자페이지로 바로 넘어감
                 return "redirect:/masterPage";
             }else {
-                return "redirect:/boardList";
+                return "redirect:/products";
             }
         } else {
             return "login";
@@ -43,6 +43,6 @@ public class AuthController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/boardList";
+        return "redirect:/products";
     }
 }
