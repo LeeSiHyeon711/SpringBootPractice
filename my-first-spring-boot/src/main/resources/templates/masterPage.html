@@ -34,6 +34,7 @@
             <p>2024-10-10 댓글관리 신메뉴 개발. 댓글 조회 및 삭제가능. 전체삭제도 가능하지만 역시 테스트 안해봄</p>
             <p>2024-10-11 댓글 전체 삭제 테스트 완료. 잘 작동함...</p>
             <p>2024-10-13 쇼핑몰 프로젝트 시작. 상품 상세페이지까지는 구현완료</p>
+            <p>2024-10-14 쇼핑몰 주문현황 관리메뉴 개발</p>
         </div>
         <div id="product" class="content">
             <h2>상품관리</h2>
@@ -53,6 +54,25 @@
                     <td th:text="${products.description}" style="text-align: center"></td>
                     <td th:text="${#temporals.format(products.createdAt, 'yyyy.MM.dd HH:mm')}" style="text-align: center"></td>
                     <td th:text="${products.saleVolume}" style="text-align: center"></td>
+                </tr>
+            </table>
+            <h2>주문관리</h2>
+            <table class="main-table">
+                <tr>
+                    <th>주문번호</th>
+                    <th>상품이름</th>
+                    <th>수량</th>
+                    <th>총 가격</th>
+                    <th>판매일</th>
+                    <th>상태</th>
+                </tr>
+                <tr th:each="orders : ${orders}">
+                    <td th:text="${orders.orderId}" style="text-align: center"></td>
+                    <td th:text="${orders.productName}" style="text-align: center"></td>
+                    <td th:text="${orders.quantity}" style="text-align: center"></td>
+                    <td th:text="${orders.totalPrice}" style="text-align: center"></td>
+                    <td th:text="${#temporals.format(orders.orderDate, 'yyyy.MM.dd HH:mm')}" style="text-align: center"></td>
+                    <td th:text="${orders.orderStatus}" style="text-align: center"></td>
                 </tr>
             </table>
         </div>

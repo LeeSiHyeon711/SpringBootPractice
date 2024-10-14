@@ -18,22 +18,16 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "product_name")
     private String productName;
-
     @Column(name = "price")
     private int price;
-
     @Column(name = "description")
     private String description;
-
     @Column(name = "image_url")
     private String imageUrl;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
     @Column(name = "sales_volume")
     private Integer saleVolume;
 }

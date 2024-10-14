@@ -3,7 +3,7 @@ package com.example.my_first_spring_boot.service;
 import com.example.my_first_spring_boot.entity.ProductEntity;
 import com.example.my_first_spring_boot.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+
 
 import java.util.List;
 

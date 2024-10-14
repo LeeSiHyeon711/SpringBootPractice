@@ -24,6 +24,7 @@ public class ProductController {
         model.addAttribute("products", products);
         return "productList";
     }
+    //상품 상세보기 출력 컨트롤러
     @GetMapping("/product/{id}")
     public String getProductDetail(@PathVariable Long id, Model model) {
         ProductEntity product = productService.getProductById(id);

@@ -1,9 +1,6 @@
 package com.example.my_first_spring_boot.controller;
 
-import com.example.my_first_spring_boot.entity.BoardEntity;
-import com.example.my_first_spring_boot.entity.CommentEntity;
-import com.example.my_first_spring_boot.entity.ProductEntity;
-import com.example.my_first_spring_boot.entity.UseEntity;
+import com.example.my_first_spring_boot.entity.*;
 import com.example.my_first_spring_boot.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,14 +18,16 @@ public class MasterListController {
     private final UserService userService;
     private final CommentService commentService;
     private final ProductService productService;
+    private final OrderProductsService orderProductsService;
 
-    public MasterListController(MasterBoardService MasterBoardService, MasterBoardService masterBoardService, BoardService boardService, UserService userService, CommentService commentService, ProductService productService) {
+    public MasterListController(MasterBoardService MasterBoardService, MasterBoardService masterBoardService, BoardService boardService, UserService userService, CommentService commentService, ProductService productService, OrderProductsService orderProductsService) {
         this.MasterBoardService = MasterBoardService;
         this.masterBoardService = masterBoardService;
         this.boardService = boardService;
         this.userService = userService;
         this.commentService = commentService;
         this.productService = productService;
+        this.orderProductsService = orderProductsService;
     }
     //관리자용 게시판 글 목록 컨트롤러
     @GetMapping("/masterPage")
@@ -50,6 +49,9 @@ public class MasterListController {
         //상품 리스트 가져오기
         List<ProductEntity> products = productService.getAllProducts();
         model.addAttribute("products", products);
+        //주문 현황 가져오기
+        List<OrderEntity> orders = orderProductsService.getAllOrders();
+        model.addAttribute("orders", orders);
         return "masterPage";
     }
     // 관리자용 게시글 삭제 컨트롤러
