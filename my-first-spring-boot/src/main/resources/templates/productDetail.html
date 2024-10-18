@@ -28,7 +28,7 @@
   </div>
 </nav>
 <div class="p-3 mb-2 bg-black text-white">
-  <div class="card text-bg-secondary mb-3" style="max-width: 800px;">
+  <div class="card text-bg-secondary mb-3">
     <div class="row g-0">
       <div class="col-md-4">
         <img th:src="${product.imageUrl}" class="img-fluid rounded-start" th:alt="${product.productName}">
@@ -40,7 +40,7 @@
           <p th:text="${product.price}+' 원'" class="card-text"></p>
           누적판매량 <p class="card-text"><small th:text="${product.saleVolume+' 개'}" class="text-body-secondary"></small></p>
           <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="button" class="btn btn-outline-dark">주문하기</button>
+            <button onclick="location.href='/orderPage'" type="button" class="btn btn-outline-dark">주문하기</button>
             <button onclick="location.href='/products'" type="button" class="btn btn-outline-dark">목록보기</button>
           </div>
         </div>
