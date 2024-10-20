@@ -1,40 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Yeon+Sung&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/BoardStyle.css">
-    <title>게시판 실습</title>
-</head>
-<body>
-<h2>게시판 개인실습 : 목록보기</h2>
-<form method="get">
-    <button type="button" th:if="${session.userRole == 'MASTER'}" onclick="location.href='/masterPage'">관리모드</button>
-    <table class="main-table">
-        <tr>
-            <th width="*">제목</th>
-            <th width="10%">작성자</th>
-            <th width="20%">작성일</th>
-            <th width="10%">좋아요</th>
-        </tr>
-        <tr th:each="boardEntity : ${boardEntities}">
-            <td>
-                <a th:href="@{/viewPost/{id}(id=${boardEntity.id})}"
-                   th:text="${boardEntity.title}"></a>
-            </td>
-            <td th:text="${boardEntity.author}" style="text-align: center"></td>
-            <td th:text="${#temporals.format(boardEntity.createDate, 'yyyy-MM-dd')}" style="text-align: center"></td>
-            <td th:text="${boardEntity.likes}" style="text-align: center"></td>
-        </tr>
-    </table>
-    <div class="button-group">
-        <button type="button" onclick="location.href='/products'">상품보기</button>
-        <button type="button" th:if="${session.loggedInUser == null}" onclick="location.href='/login'">로그인</button>
-        <button type="button" th:if="${session.loggedInUser != null}" onclick="location.href='/addBoardForm'">글작성</button>
-        <button type="button" th:if="${session.loggedInUser != null}" onclick="location.href='/logout'">로그아웃</button>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}" lang="en">
+<div layout:fragment="content">
+    <div class="card text-bg-dark mb-3">
+        <div class="card-header">게시글 목록보기</div>
+        <div class="card-body">
+            <form method="get">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-outline-primary" th:if="${session.loggedInUser != null}" onclick="location.href='/addBoardForm'">글작성</button>
+                </div>
+                <br>
+                <table class="table table-striped">
+                    <tr>
+                        <th width="*">제목</th>
+                        <th width="10%">작성자</th>
+                        <th width="20%">작성일</th>
+                        <th width="10%">좋아요</th>
+                    </tr>
+                    <tr th:each="board : ${boardEntities}">
+                        <td>
+                            <a th:href="@{/viewPost/{id}(id=${board.id})}">[[${board.title}]]</a>
+                        </td>
+                        <td>[[${board.author}]]</td>
+                        <td>[[${#temporals.format(board.createDate, 'yyyy-MM-dd')}]]</td>
+                        <td>[[${board.likes}]]</td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
-</form>
-</body>
-</html>
+</div>
+<script layout:fragment="script" th:inline="javascript">
+
+</script>

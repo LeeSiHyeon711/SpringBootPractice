@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Yeon+Sung&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/BoardStyle.css">
-    <title>회원가입</title>
-</head>
-<body>
-<h1>회원가입</h1>
-<h1>필수입력사항은 꼭 입력해주세요(*)</h1>
-<form action="/register" method="post">
-    <div>
-        <label for="id">*아이디: </label>
-        <input type="text" id="id" name="id" required>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}" lang="en">
+<div layout:fragment="content">
+    <div class="card text-bg-dark mb-3">
+        <div class="card-header">회원 가입</div>
+        <form action="/register" method="post">
+            <div class="card-body">
+                <p style="color: red">필수입력사항은 꼭 입력해주세요(*)</p>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" style="width:15%">*아이디</span>
+                    <input class="form-control" type="text" id="id" name="id" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" style="width:15%">*이름</span>
+                    <input class="form-control" type="text" id="name" name="name" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" style="width:15%">생년월일</span>
+                    <input class="form-control" type="date" id="birth" name="birth">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" style="width:15%">휴대폰 번호</span>
+                    <input class="form-control" type="text" id="phone" name="phone">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" style="width:15%">*비밀번호</span>
+                    <input class="form-control" type="password" id="pass" name="pass" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" style="width:15%">이메일 주소</span>
+                    <input class="form-control" type="text" id="e_mail" name="e_mail">
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-outline-primary">회원가입</button>
+                    <button type="button" onclick="location.href='/login'" class="btn btn-outline-dark">뒤로가기</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <label for="name">*이름: </label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-        <label for="birth">생년월일: </label>
-        <input type="date" id="birth" name="birth">
-    </div>
-    <div>
-        <label for="phone">휴대폰(숫자만 입력해주세요): </label>
-        <input type="text" id="phone" name="phone">
-    </div>
-    <div>
-        <label for="pass">*비밀번호: </label>
-        <input type="password" id="pass" name="pass" required>
-    </div>
-    <div>
-        <label for="e_mail">이메일주소: </label>
-        <input type="text" id="e_mail" name="e_mail">
-    </div>
-    <div class="button-group">
-        <button type="submit">회원가입</button>
-        <button type="button" onclick="location.href='/login'">뒤로가기</button>
-    </div>
-</form>
-</body>
-</html>
+</div>
+<script layout:fragment="script" th:inline="javascript">
+
+</script>
