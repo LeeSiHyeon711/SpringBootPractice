@@ -37,7 +37,7 @@
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <form action="/like" method="post">
           <input type="hidden" name="id" th:value="${boardEntity.id}">
-          <button type="submit" onclick="location.href='/likeBoard'" class="btn btn-outline-info">좋아요👍</button>
+          <button type="submit" onclick="location.href='/likeBoard'" class="btn btn-outline-success">좋아요👍</button>
         </form>
         <form action="/boardList" method="get">
           <button type="button" onclick="location.href='/boardList'" class="btn btn-outline-dark">목록보기</button>

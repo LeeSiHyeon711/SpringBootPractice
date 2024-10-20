@@ -2,6 +2,7 @@ package com.example.my_first_spring_boot.controller;
 
 import com.example.my_first_spring_boot.entity.*;
 import com.example.my_first_spring_boot.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,9 @@ public class MasterListController {
     }
     //관리자용 게시판 글 목록 컨트롤러
     @GetMapping("/masterPage")
-    public String boardList(Model model) {
+    public String boardList(HttpServletRequest request, Model model) {
+        //관리자 로그인 정보 및 관리자 페이지 이동 정보 리퀘스트 전송
+        model.addAttribute("requestURI", request.getRequestURI());
         //게시판 목록 가져오기
         List<BoardEntity> boardEntities = MasterBoardService.findAllBoards();
         long totalCount = MasterBoardService.totalBoards();

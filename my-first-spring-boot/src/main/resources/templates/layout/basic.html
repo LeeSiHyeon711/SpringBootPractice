@@ -14,8 +14,8 @@
 <body>
 <div class="d-flex" id="wrapper">
     <!-- Sidebar-->
-    <div class="border-end bg-white" id="sidebar-wrapper" th:if="${session.userRole == 'MASTER'}">
-        <div class="sidebar-heading border-bottom bg-light">관리자 메뉴</div>
+    <div class="border-end bg-white" id="sidebar-wrapper"
+         th:if="${session.userRole == 'MASTER' and requestURI == '/masterPage'}">
         <div class="list-group list-group-flush">
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#" onclick="showContent('home')">공지사항</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#" onclick="showContent('product')">쇼핑몰관리</a>
@@ -29,7 +29,7 @@
         <!-- Top navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
             <div class="container-fluid">
-                <button type="button" class="btn btn-outline-primary" id="sidebarToggle" th:if="${session.userRole == 'MASTER'}">관리메뉴</button>
+                <button type="button" class="btn btn-outline-primary" id="sidebarToggle" th:if="${session.userRole == 'MASTER' and requestURI == '/masterPage'}">관리자 메뉴</button>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
